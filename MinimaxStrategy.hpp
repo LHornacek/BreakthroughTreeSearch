@@ -1,6 +1,8 @@
 #pragma once
 #include "Strategy.hpp"
+#include <limits>
 
+// a player that uses minimax algorithm with fixed search depth to determine the best move to make
 class MinimaxStrategy : public Strategy {
 public:
     MinimaxStrategy(unsigned int depth);

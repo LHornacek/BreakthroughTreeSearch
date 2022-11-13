@@ -4,10 +4,8 @@ MinimaxStrategy::MinimaxStrategy(unsigned int depth) : Strategy(), depth(depth) 
 
 move MinimaxStrategy::makeMove(const std::set<piece>& whitePieces, const std::set<piece>& blackPieces) const {
     std::vector<move> possibleMoves = generatePossibleMoves(whitePieces, blackPieces, isWhite);
-    std::set<move> bestMoves = std::set<move>();
-    bestMoves.insert(possibleMoves[0]);
     move bestMove = possibleMoves[0];
-    int bestValue = INT_MIN;
+    int bestValue = std::numeric_limits<int>::min();
     for (move move : possibleMoves) {
         std::set<piece> whiteTemp = whitePieces;
         std::set<piece> blackTemp = blackPieces;
@@ -49,7 +47,7 @@ int MinimaxStrategy::maxi(const std::set<piece>& whitePieces, const std::set<pie
         return eval(whitePieces, blackPieces);
     }
     std::vector<move> moves = generatePossibleMoves(whitePieces, blackPieces, isWhite);
-    int max = INT_MIN;
+    int max = std::numeric_limits<int>::min();
     for (move move : moves) {
         std::set<piece> whiteTemp = whitePieces;
         std::set<piece> blackTemp = blackPieces;
@@ -58,7 +56,7 @@ int MinimaxStrategy::maxi(const std::set<piece>& whitePieces, const std::set<pie
             whiteTemp.insert({ move.newRow, move.newCol });
             blackTemp.erase({ move.newRow, move.newCol });
             if (move.newRow == 0 || blackTemp.empty()) {
-                return INT_MAX;
+                return std::numeric_limits<int>::max();
             }
         }
         else {
@@ -66,7 +64,7 @@ int MinimaxStrategy::maxi(const std::set<piece>& whitePieces, const std::set<pie
             blackTemp.insert({ move.newRow, move.newCol });
             whiteTemp.erase({ move.newRow, move.newCol });
             if (move.newRow == 7 || whiteTemp.empty()) {
-                return INT_MAX;
+                return std::numeric_limits<int>::max();
             }
         }
         int value = mini(whiteTemp, blackTemp, depth - 1);
@@ -82,7 +80,7 @@ int MinimaxStrategy::mini(const std::set<piece>& whitePieces, const std::set<pie
         return eval(whitePieces, blackPieces);
     }
     std::vector<move> moves = generatePossibleMoves(whitePieces, blackPieces, !isWhite);
-    int min = INT_MAX;
+    int min = std::numeric_limits<int>::max();
     for (move move : moves) {
         std::set<piece> whiteTemp = whitePieces;
         std::set<piece> blackTemp = blackPieces;
@@ -91,7 +89,7 @@ int MinimaxStrategy::mini(const std::set<piece>& whitePieces, const std::set<pie
             blackTemp.insert({ move.newRow, move.newCol });
             whiteTemp.erase({ move.newRow, move.newCol });
             if (move.newRow == 7 || whiteTemp.empty()) {
-                return INT_MIN;
+                return std::numeric_limits<int>::min();
             }
         }
         else {
@@ -99,7 +97,7 @@ int MinimaxStrategy::mini(const std::set<piece>& whitePieces, const std::set<pie
             whiteTemp.insert({ move.newRow, move.newCol });
             blackTemp.erase({ move.newRow, move.newCol });
             if (move.newRow == 0 || blackTemp.empty()) {
-                return INT_MIN;
+                return std::numeric_limits<int>::min();
             }
         }
         int value = maxi(whiteTemp, blackTemp, depth - 1);

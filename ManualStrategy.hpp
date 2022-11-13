@@ -2,6 +2,7 @@
 #include "Strategy.hpp"
 #include <iostream>
 
+// a player that takes turns from console
 class ManualStrategy : public Strategy {
 public:
     ManualStrategy();

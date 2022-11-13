@@ -7,47 +7,7 @@ Game::Game(const std::shared_ptr<Strategy>& player1, const std::shared_ptr<Strat
 
 bool Game::playGame() {
     resetBoard();
-    bool isPlayerOneTurn = oneIsWhite;
-    bool isWon;
-    move move;
-    while (true) {
-        if (isPlayerOneTurn) {
-            move = player1->makeMove(whitePieces, blackPieces);
-            if (oneIsWhite) {
-                whitePieces.erase({ move.oldRow, move.oldCol });
-                whitePieces.insert({ move.newRow, move.newCol });
-                blackPieces.erase({ move.newRow, move.newCol });
-                isWon = move.newRow == 0 || blackPieces.empty();
-            }
-            else {
-                blackPieces.erase({ move.oldRow, move.oldCol });
-                blackPieces.insert({ move.newRow, move.newCol });
-                whitePieces.erase({ move.newRow, move.newCol });
-                isWon = move.newRow == 7 || whitePieces.empty();
-            }
-        }
-        else {
-            move = player2->makeMove(whitePieces, blackPieces);
-            if (!oneIsWhite) {
-                whitePieces.erase({ move.oldRow, move.oldCol });
-                whitePieces.insert({ move.newRow, move.newCol });
-                blackPieces.erase({ move.newRow, move.newCol });
-                isWon = move.newRow == 0 || blackPieces.empty();
-            }
-            else {
-                blackPieces.erase({ move.oldRow, move.oldCol });
-                blackPieces.insert({ move.newRow, move.newCol });
-                whitePieces.erase({ move.newRow, move.newCol });
-                isWon = move.newRow == 7 || whitePieces.empty();
-            }
-        }
-
-        if (isWon) {
-            return isPlayerOneTurn;
-        }
-
-        isPlayerOneTurn = !isPlayerOneTurn;
-    }
+    return playGame(whitePieces, blackPieces, oneIsWhite);
 }
 
 void Game::switchPlayers() {
@@ -69,11 +29,9 @@ void Game::resetBoard() {
     }
 }
 
-bool Game::debugFunction(std::set<piece> whitePieces, std::set<piece> blackPieces) {
-    bool isPlayerOneTurn = oneIsWhite;
+bool Game::playGame(std::set<piece>& whitePieces, std::set<piece>& blackPieces, bool isPlayerOneTurn) {
     bool isWon;
     move move;
-    printBoard(whitePieces, blackPieces);
     while (true) {
         if (isPlayerOneTurn) {
             move = player1->makeMove(whitePieces, blackPieces);
@@ -105,7 +63,6 @@ bool Game::debugFunction(std::set<piece> whitePieces, std::set<piece> blackPiece
                 isWon = move.newRow == 7 || whitePieces.empty();
             }
         }
-        printBoard(whitePieces, blackPieces);
 
         if (isWon) {
             return isPlayerOneTurn;

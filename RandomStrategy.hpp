@@ -3,6 +3,7 @@
 #include <random>
 #include <iostream>
 
+// a player that always chooses his move at random out of all possible valid moves
 class RandomStrategy : public Strategy {
 public:
     RandomStrategy();

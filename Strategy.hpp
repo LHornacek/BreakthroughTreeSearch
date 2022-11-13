@@ -3,13 +3,11 @@
 #include <set>
 #include <vector>
 
-//TODO <limits> instead
-#include <climits>
-
 class Strategy {
 public:
     Strategy();
 
+    // always returns a valid move
     virtual move makeMove(const std::set<piece>& whitePieces, const std::set<piece>& blackPieces) const = 0;
 
     void setIsWhite(bool value);
